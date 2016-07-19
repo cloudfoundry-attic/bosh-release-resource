@@ -7,11 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = 'bosh-release-resource'
   spec.version       = BoshReleaseResource::VERSION
   spec.authors       = ['Eric Saxby', 'Tim Hausler']
-  spec.email         = ['sax@livinginthepast.org']
+  spec.email         = ['sax@livinginthepast.org', 'thausler@pivotal.io']
 
   spec.summary       = %q{Deploy a bosh release}
   spec.description   = %q{Deploy a bosh release}
-  spec.homepage      = 'https://github.com/sax/bosh-release-resource'
+  spec.homepage      = 'https://github.com/cloudfoundry/bosh-release-resource'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
