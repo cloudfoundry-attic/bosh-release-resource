@@ -37,7 +37,7 @@ module BoshReleaseResource
 
   class CommandRunner
     def run(command, env={}, opts={})
-      pid = Process.spawn(env, command, { resource_out: :err, err: :err }.merge(opts))
+      pid = Process.spawn(env, command, { out: :err, err: :err }.merge(opts))
       Process.wait(pid)
       raise "command '#{command}' failed!" unless $?.success?
     end
