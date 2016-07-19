@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+require 'bosh_release_resource'
+
+working_dir = ARGV[0]
+request = JSON.parse(STDIN.read)
+
+source = request.fetch('source')
+params = request.fetch('params')
+
+target_file = params['target_file']
+
+target =
+  if target_file
+    File.read(File.expand_path(target_file, working_dir)).strip
+  else
+    source.fetch('target')
+  end
+
+auth = BoshReleaseResource::Auth.parse(source)
+ca_cert = BoshReleaseResource::CaCert.new(source['ca_cert'])
+
+bosh = BoshReleaseResource::Bosh.new(
+  target,
+  ca_cert,
+  auth
+)
+
+command = BoshReleaseResource::Commands::Out.new(bosh)
+
+begin
+  command.run(working_dir, request)
+rescue => e
+  STDERR.puts e.message
+  exit 1
+ensure
+  ca_cert.cleanup
+end
